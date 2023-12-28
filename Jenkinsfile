@@ -1,37 +1,26 @@
-pipeline {
+pipeline
+{
     agent any
-
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-
-                sh 'git log HEAD^..HEAD --pretty="%h %an - %s" > GIT_CHANGES'
-                def lastChanges = readFile('GIT_CHANGES')
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh './jenkins_deploy_prod_docker.sh'
-            }
-        }
-
-        stage('Publish results') {
-            steps {
-                echo "Deployment successful"
-            }
+    stages
+    {
+    stage('Git Connect')
+    {
+        steps
+        {
+            echo "Welcome"
+            sh "ls -ltr"
+            sh "rm -r localrepo"
+            sh "git clone https://github.com/asmin97mhj/localrepo.git"
+            sh "ls -ltr localrepo"
         }
     }
-
-    post {
-        success {
-            echo "Build successful"
-            // You can add additional steps here, like running tests or notifications.
+    stage ('Docker Build')
+    {
+        steps
+        {
+            sh 'cd localrepo && docker build -t pyapp .'
+            sh 'docker run -dit --name appcalc -p:8000:8000 pyapp'
         }
-
-        failure {
-            echo "Build failed"
-        }
+    }
     }
 }
