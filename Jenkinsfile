@@ -18,7 +18,7 @@ pipeline
         steps
         {
             sh 'cd localrepo && docker build -t pyapp .'
-            sh 'docker run -dit --name calculator -p:8001:8001 pyapp'
+            sh 'docker run -dit --name calculator1 -p:8001:8001 pyapp'
         }
     }
     }
