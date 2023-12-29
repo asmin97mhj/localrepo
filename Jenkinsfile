@@ -9,7 +9,6 @@ pipeline
         {
             echo "Welcome"
             sh "ls -ltr"
-            sh "rm -r localrepo"
             sh "git clone https://github.com/asmin97mhj/localrepo.git"
             sh "ls -ltr localrepo"
         }
@@ -19,7 +18,7 @@ pipeline
         steps
         {
             sh 'cd localrepo && docker build -t pyapp .'
-            sh 'docker run -dit --name appcalc -p:8000:8000 pyapp'
+            sh 'docker run -dit --name calculator -p:8001:8001 pyapp'
         }
     }
     }
