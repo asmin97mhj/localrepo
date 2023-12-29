@@ -9,7 +9,7 @@ pipeline
         {
             echo "Welcome"
             sh "ls -ltr"
-	    rm -r localrepo
+	    sh "rm -r localrepo"
             sh "git clone https://github.com/asmin97mhj/localrepo.git"
             sh "ls -ltr localrepo"
         }
